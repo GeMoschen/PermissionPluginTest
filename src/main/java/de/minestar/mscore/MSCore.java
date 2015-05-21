@@ -17,11 +17,14 @@ import org.spongepowered.api.event.state.ServerStartingEvent;
 import org.spongepowered.api.event.state.ServerStoppedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.service.ProviderExistsException;
+import org.spongepowered.api.service.ServiceManager;
 import org.spongepowered.api.service.permission.PermissionService;
 
 import com.google.inject.Inject;
 
 import de.gemo.permconfig.services.PermissionHolder;
+import de.gemo.permconfig.sponge.PermService;
 import de.minestar.library.plugin.AbstractPluginCore;
 
 @Plugin(id = "MSCore", name = "MS Core", version = "1.0")
@@ -47,6 +50,10 @@ public class MSCore extends AbstractPluginCore {
 		return MSCore.getGame().getServer();
 	}
 
+	public static ServiceManager getServiceManager() {
+		return MSCore.getGame().getServiceManager();
+	}
+
 	public Logger getLogger() {
 		return logger;
 	}
@@ -57,11 +64,18 @@ public class MSCore extends AbstractPluginCore {
 		logger.info("ConstructionEvent");
 		MSCore.INSTANCE = this;
 	}
-	
+
 	@Subscribe
 	@Override
 	public void onPreInitialization(PreInitializationEvent event) {
 		logger.info("PreInitializationEvent");
+		try {
+			PermService permissionService = new PermService();
+			MSCore.getServiceManager().setProvider(this, PermissionService.class, permissionService);
+			permissionService.init(MSCore.getGame());
+		} catch (ProviderExistsException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Subscribe

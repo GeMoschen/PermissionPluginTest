@@ -1,7 +1,5 @@
 package de.minestar.mscore;
 
-import java.util.Collections;
-
 import org.slf4j.Logger;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.event.Subscribe;
@@ -9,9 +7,6 @@ import org.spongepowered.api.event.entity.player.PlayerBreakBlockEvent;
 import org.spongepowered.api.event.entity.player.PlayerPlaceBlockEvent;
 import org.spongepowered.api.service.permission.SubjectData;
 
-import com.google.common.collect.Sets;
-
-import de.gemo.permconfig.impl.ContextHolder;
 import de.gemo.permconfig.services.PermissionHolder;
 import de.minestar.library.utils.chat.PlayerUtils;
 
@@ -29,11 +24,13 @@ public class BlockListener {
 
 		Player player = event.getUser();
 
+		System.out.println(player.getUniqueId());
+
 		System.out.println(PermissionHolder.permissionService.getUserSubjects().get(player.getIdentifier()));
 		System.out.println("player.getIdentifier() : " + player.getIdentifier());
-		System.out.println("wildcard.*: " + player.hasPermission(SubjectData.GLOBAL_CONTEXT, "wildcard.doit"));
-		System.out.println("player.canPlace: " + player.hasPermission(SubjectData.GLOBAL_CONTEXT, "player.canPlace"));
-		System.out.println("player.canDestroy: " + player.hasPermission(SubjectData.GLOBAL_CONTEXT, "player.canDestroy"));
+		System.out.println("wildcard.*: " + player.hasPermission("wildcard.doit"));
+		System.out.println("player.canPlace: " + player.hasPermission("player.canPlace"));
+		System.out.println("player.canDestroy: " + player.hasPermission("player.canDestroy"));
 		if (player.hasPermission(SubjectData.GLOBAL_CONTEXT, "player.canPlace")) {
 			PlayerUtils.sendInfo(player, "BlockPlace OLD", event.getReplacementBlock().getState().getType().getName());
 			PlayerUtils.sendInfo(player, "BlockPlace NEW", event.getBlock().getType().getName());
