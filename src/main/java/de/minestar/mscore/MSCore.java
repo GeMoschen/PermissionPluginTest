@@ -1,7 +1,5 @@
 package de.minestar.mscore;
 
-import java.io.File;
-
 import org.slf4j.Logger;
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
@@ -23,7 +21,6 @@ import org.spongepowered.api.service.permission.PermissionService;
 
 import com.google.inject.Inject;
 
-import de.gemo.permconfig.services.PermissionHolder;
 import de.gemo.permconfig.sponge.PermService;
 import de.minestar.library.plugin.AbstractPluginCore;
 
@@ -111,8 +108,6 @@ public class MSCore extends AbstractPluginCore {
 	@Override
 	public void onServerStarted(ServerStartedEvent event) {
 		logger.info("ServerStartedEvent");
-		PermissionHolder.permissionService = getGame().getServiceManager().provideUnchecked(PermissionService.class);
-		PermissionHolder.getInstance().loadWorlds(new File("Permissions/"));
 		event.getGame().getEventManager().register(this, new BlockListener());
 	}
 

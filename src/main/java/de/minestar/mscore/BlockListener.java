@@ -7,7 +7,7 @@ import org.spongepowered.api.event.entity.player.PlayerBreakBlockEvent;
 import org.spongepowered.api.event.entity.player.PlayerPlaceBlockEvent;
 import org.spongepowered.api.service.permission.SubjectData;
 
-import de.gemo.permconfig.services.PermissionHolder;
+import de.gemo.permconfig.sponge.PermService;
 import de.minestar.library.utils.chat.PlayerUtils;
 
 public class BlockListener {
@@ -25,8 +25,7 @@ public class BlockListener {
 		Player player = event.getUser();
 
 		System.out.println(player.getUniqueId());
-
-		System.out.println(PermissionHolder.permissionService.getUserSubjects().get(player.getIdentifier()));
+		System.out.println(PermService.getInstance().getUserSubjects().get(player.getIdentifier()));
 		System.out.println("player.getIdentifier() : " + player.getIdentifier());
 		System.out.println("wildcard.*: " + player.hasPermission("wildcard.doit"));
 		System.out.println("player.canPlace: " + player.hasPermission("player.canPlace"));
