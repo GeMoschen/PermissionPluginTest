@@ -70,7 +70,7 @@ public class MSCore extends AbstractPluginCore {
     public void onPreInitialization(PreInitializationEvent event) {
         INFO("PreInitializationEvent");
         try {
-            PermService permissionService = new PermService(true);
+            PermService permissionService = PermService.getInstance(true);
             MSCore.getServiceManager().setProvider(this, PermissionService.class, permissionService);
             permissionService.init(MSCore.getGame());
             permissionService.loadWorlds(new File("Permissions/"));
