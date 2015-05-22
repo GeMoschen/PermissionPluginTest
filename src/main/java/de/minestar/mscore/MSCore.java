@@ -1,6 +1,7 @@
 package de.minestar.mscore;
 
-import org.slf4j.Logger;
+import java.io.File;
+
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.event.Subscribe;
@@ -21,14 +22,12 @@ import org.spongepowered.api.service.permission.PermissionService;
 
 import com.google.inject.Inject;
 
+import de.Log;
 import de.gemo.permconfig.sponge.PermService;
 import de.minestar.library.plugin.AbstractPluginCore;
 
 @Plugin(id = "MSCore", name = "MS Core", version = "1.0")
 public class MSCore extends AbstractPluginCore {
-
-	@Inject
-	Logger logger;
 
 	@Inject
 	Game game;
@@ -51,25 +50,22 @@ public class MSCore extends AbstractPluginCore {
 		return MSCore.getGame().getServiceManager();
 	}
 
-	public Logger getLogger() {
-		return logger;
-	}
-
 	@Subscribe
 	@Override
 	public void onConstruction(ConstructionEvent event) {
-		logger.info("ConstructionEvent");
+		Log.info("ConstructionEvent");
 		MSCore.INSTANCE = this;
 	}
 
 	@Subscribe
 	@Override
 	public void onPreInitialization(PreInitializationEvent event) {
-		logger.info("PreInitializationEvent");
+		Log.info("PreInitializationEvent");
 		try {
-			PermService permissionService = new PermService();
+			PermService permissionService = new PermService(true);
 			MSCore.getServiceManager().setProvider(this, PermissionService.class, permissionService);
 			permissionService.init(MSCore.getGame());
+			permissionService.loadWorlds(new File("Permissions/"));
 		} catch (ProviderExistsException e) {
 			e.printStackTrace();
 		}
@@ -78,47 +74,47 @@ public class MSCore extends AbstractPluginCore {
 	@Subscribe
 	@Override
 	public void onInitialization(InitializationEvent event) {
-		logger.info("InitializationEvent");
+		Log.info("InitializationEvent");
 	}
 
 	@Subscribe
 	@Override
 	public void onPostInitialization(PostInitializationEvent event) {
-		logger.info("PostInitializationEvent");
+		Log.info("PostInitializationEvent");
 	}
 
 	@Override
 	public void onLoadComplete(LoadCompleteEvent event) {
-		logger.info("LoadCompleteEvent");
+		Log.info("LoadCompleteEvent");
 	}
 
 	@Subscribe
 	@Override
 	public void onServerAboutToStart(ServerAboutToStartEvent event) {
-		logger.info("ServerAboutToStartEvent");
+		Log.info("ServerAboutToStartEvent");
 	}
 
 	@Subscribe
 	@Override
 	public void onServerStarting(ServerStartingEvent event) {
-		logger.info("ServerStartingEvent");
+		Log.info("ServerStartingEvent");
 	}
 
 	@Subscribe
 	@Override
 	public void onServerStarted(ServerStartedEvent event) {
-		logger.info("ServerStartedEvent");
+		Log.info("ServerStartedEvent");
 		event.getGame().getEventManager().register(this, new BlockListener());
 	}
 
 	@Subscribe
 	@Override
 	public void onServerStopping(ServerStoppingEvent event) {
-		logger.info("ServerStoppingEvent");
+		Log.info("ServerStoppingEvent");
 	}
 	@Subscribe
 	@Override
 	public void onServerStopped(ServerStoppedEvent event) {
-		logger.info("ServerStoppedEvent");
+		Log.info("ServerStoppedEvent");
 	}
 }
