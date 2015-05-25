@@ -1,19 +1,22 @@
 package de.minestar.mscore;
 
-import static de.Log.*;
+import static de.Log.INFO;
 
-import java.io.*;
+import java.io.File;
 
-import org.spongepowered.api.event.*;
-import org.spongepowered.api.event.state.*;
-import org.spongepowered.api.plugin.*;
-import org.spongepowered.api.service.*;
-import org.spongepowered.api.service.permission.*;
+import org.spongepowered.api.event.Subscribe;
+import org.spongepowered.api.event.state.ConstructionEvent;
+import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerStoppingEvent;
+import org.spongepowered.api.plugin.Plugin;
+import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.service.ProviderExistsException;
+import org.spongepowered.api.service.permission.PermissionService;
 
-import com.google.inject.*;
+import com.google.inject.Inject;
 
-import de.gemo.permconfig.sponge.*;
-import de.minestar.library.plugin.*;
+import de.gemo.permconfig.sponge.PermService;
+import de.minestar.library.plugin.AbstractCore;
 
 
 @Plugin(id = "MinestarLibrary", name = "Minestar Library", version = "1.0")

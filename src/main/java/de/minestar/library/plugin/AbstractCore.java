@@ -1,18 +1,29 @@
 package de.minestar.library.plugin;
 
-import java.io.*;
+import java.io.File;
 
-import org.spongepowered.api.*;
-import org.spongepowered.api.event.state.*;
-import org.spongepowered.api.plugin.*;
-import org.spongepowered.api.service.*;
-import org.spongepowered.api.service.command.*;
-import org.spongepowered.api.service.event.*;
-import org.spongepowered.api.service.scheduler.*;
+import org.spongepowered.api.Game;
+import org.spongepowered.api.Server;
+import org.spongepowered.api.event.state.ConstructionEvent;
+import org.spongepowered.api.event.state.InitializationEvent;
+import org.spongepowered.api.event.state.LoadCompleteEvent;
+import org.spongepowered.api.event.state.PostInitializationEvent;
+import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerAboutToStartEvent;
+import org.spongepowered.api.event.state.ServerStartedEvent;
+import org.spongepowered.api.event.state.ServerStartingEvent;
+import org.spongepowered.api.event.state.ServerStoppedEvent;
+import org.spongepowered.api.event.state.ServerStoppingEvent;
+import org.spongepowered.api.plugin.PluginContainer;
+import org.spongepowered.api.service.ServiceManager;
+import org.spongepowered.api.service.command.CommandService;
+import org.spongepowered.api.service.event.EventManager;
+import org.spongepowered.api.service.scheduler.AsynchronousScheduler;
+import org.spongepowered.api.service.scheduler.SynchronousScheduler;
 
-import com.google.common.base.*;
+import com.google.common.base.Preconditions;
 
-import de.minestar.library.utils.log.*;
+import de.minestar.library.utils.log.LogUtils;
 
 
 public abstract class AbstractCore {

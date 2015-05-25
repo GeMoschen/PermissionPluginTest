@@ -2,8 +2,6 @@ package de.minestar.library.utils.chat;
 
 import java.util.Collection;
 
-import javax.annotation.Nullable;
-
 import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
