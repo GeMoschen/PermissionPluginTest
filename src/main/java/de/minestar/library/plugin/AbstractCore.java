@@ -239,7 +239,7 @@ public abstract class AbstractCore {
      * 
      * @param event
      */
-    public final void onInitialization(InitializationEvent event) {
+    public void onInitialization(InitializationEvent event) {
     }
 
 
