@@ -1,13 +1,9 @@
 package de.minestar.mscore;
 
-import static de.Log.INFO;
-
 import java.io.File;
 
 import org.spongepowered.api.event.Subscribe;
-import org.spongepowered.api.event.state.ConstructionEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
-import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -29,6 +25,10 @@ public class LibraryCore extends AbstractCore {
     //
     // AbstractCore
     // The following lines should be in all plugins
+    // NOTE: do NOT use the following events for out plugins:
+    // - ConstructionEvent
+    // - PreInitializationEvent
+    // Using them could cause errors, when using our UtilClasses
     //
     // ///////////////////////////////////////////////////////////////
 
@@ -37,8 +37,7 @@ public class LibraryCore extends AbstractCore {
 
 
     @Subscribe
-    @Override
-    public void onConstruction(ConstructionEvent event) {
+    public void onPreInitialization(PreInitializationEvent event) {
         // startup
         if (!this.startUp(this.pluginContainer, event.getGame())) {
             // TODO: is there a way to disable plugins on the fly?
@@ -59,6 +58,25 @@ public class LibraryCore extends AbstractCore {
     // ///////////////////////////////////////////////////////////////
 
     private BlockListener blockListener;
+    private PermService permissionService;
+
+
+    @Override
+    protected boolean commonEnable() {
+        // initialize PlayerUtils
+        PlayerUtils.initialize(this.getGame());
+
+        try {
+            this.permissionService = PermService.getInstance(false);
+            this.getServiceManager().setProvider(this, PermissionService.class, this.permissionService);
+            this.permissionService.init(this.getGame());
+            this.permissionService.loadWorlds(new File(this.getDataFolder(), "Permissions/"));
+        } catch (ProviderExistsException e) {
+            e.printStackTrace();
+        }
+
+        return true;
+    }
 
 
     @Override
@@ -75,28 +93,10 @@ public class LibraryCore extends AbstractCore {
     }
 
 
-    @Subscribe
     @Override
-    public void onPreInitialization(PreInitializationEvent event) {
-        // initialize PlayerUtils
-        PlayerUtils.initialize(this.getGame());
-
-        INFO("PreInitializationEvent");
-        try {
-            PermService permissionService = PermService.getInstance(false);
-            this.getServiceManager().setProvider(this, PermissionService.class, permissionService);
-            permissionService.init(this.getGame());
-            permissionService.loadWorlds(new File(this.getDataFolder(), "Permissions/"));
-        } catch (ProviderExistsException e) {
-            e.printStackTrace();
-        }
-    }
-
-
-    @Override
-    public void onServerStarted(ServerStartedEvent event) {
-        // initialize PlayerUtils
-        PlayerUtils.initialize(this.getGame());
+    protected boolean commonDisable() {
+        this.permissionService.saveWorlds();
+        return true;
     }
 
 }

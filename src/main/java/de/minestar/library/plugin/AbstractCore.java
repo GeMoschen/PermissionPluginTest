@@ -4,11 +4,9 @@ import java.io.File;
 
 import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
-import org.spongepowered.api.event.state.ConstructionEvent;
 import org.spongepowered.api.event.state.InitializationEvent;
 import org.spongepowered.api.event.state.LoadCompleteEvent;
 import org.spongepowered.api.event.state.PostInitializationEvent;
-import org.spongepowered.api.event.state.PreInitializationEvent;
 import org.spongepowered.api.event.state.ServerAboutToStartEvent;
 import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStartingEvent;
@@ -227,24 +225,6 @@ public abstract class AbstractCore {
 
     protected boolean commonDisable() {
         return true;
-    }
-
-
-    /**
-     * Needs @Subscribe
-     * 
-     * @param event
-     */
-    public void onConstruction(ConstructionEvent event) {
-    }
-
-
-    /**
-     * Needs @Subscribe
-     * 
-     * @param event
-     */
-    public void onPreInitialization(PreInitializationEvent event) {
     }
 
 
