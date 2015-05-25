@@ -2,14 +2,13 @@ package de.minestar.library.utils.chat;
 
 import java.util.Collection;
 
+import org.spongepowered.api.Game;
 import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
 import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
-
-import de.minestar.mscore.LibraryCore;
 
 
 public class PlayerUtils {
@@ -19,7 +18,8 @@ public class PlayerUtils {
     public final static TextColor COLOR_SUCCESS = TextColors.GREEN;
     public final static TextColor COLOR_ERROR = TextColors.RED;
     public final static TextColor COLOR_WARNING = TextColors.DARK_PURPLE;
-    private final static Server SPONGE_SERVER;
+    private static Server SPONGE_SERVER;
+
 
     // /////////////////////////////////////////////////////////////////////////////
     //
@@ -28,8 +28,8 @@ public class PlayerUtils {
     //
     // /////////////////////////////////////////////////////////////////////////////
 
-    static {
-        SPONGE_SERVER = LibraryCore.getInstance().getServer();
+    public static void initialize(final Game game) {
+        SPONGE_SERVER = game.getServer();
     }
 
 

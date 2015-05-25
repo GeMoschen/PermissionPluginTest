@@ -11,39 +11,23 @@ import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
 import org.spongepowered.api.service.ProviderExistsException;
+import org.spongepowered.api.service.event.EventManager;
 import org.spongepowered.api.service.permission.PermissionService;
 
 import com.google.inject.Inject;
 
 import de.gemo.permconfig.sponge.PermService;
 import de.minestar.library.plugin.AbstractCore;
+import de.minestar.library.utils.chat.PlayerUtils;
 
 
-@Plugin(id = "MinestarLibrary", name = "Minestar Library", version = "1.0")
+@Plugin(id = "MSLIB", name = "Minestar Library", version = "1.0")
 public class LibraryCore extends AbstractCore {
 
     // ///////////////////////////////////////////////////////////////
     //
-    // Static methods
-    //
-    // ///////////////////////////////////////////////////////////////
-
-    private static LibraryCore INSTANCE;
-
-
-    private static void setInstance(LibraryCore instance) {
-        LibraryCore.INSTANCE = instance;
-    }
-
-
-    public static LibraryCore getInstance() {
-        return LibraryCore.INSTANCE;
-    }
-
-    // ///////////////////////////////////////////////////////////////
-    //
-    // AbstractPluginCore
-    // The following lines should be contained in all plugins extending the AbstractCore
+    // AbstractCore
+    // The following lines should be in all plugins
     //
     // ///////////////////////////////////////////////////////////////
 
@@ -67,29 +51,35 @@ public class LibraryCore extends AbstractCore {
         this.shutdown();
     }
 
-
-    // ///////////////////////////////////////////////////////////////
-    //
-    // Enable
-    //
-    // ///////////////////////////////////////////////////////////////
-
-    @Override
-    protected boolean commonEnable() {
-        LibraryCore.setInstance(this);
-        return true;
-    }
-
-
     // ///////////////////////////////////////////////////////////////
     //
     // Events
     //
     // ///////////////////////////////////////////////////////////////
 
+    private BlockListener blockListener;
+
+
+    @Override
+    protected boolean createListeners() {
+        this.blockListener = new BlockListener();
+        return true;
+    }
+
+
+    @Override
+    protected boolean registerEvents(EventManager eventManager) {
+        eventManager.register(this, this.blockListener);
+        return true;
+    }
+
+
     @Subscribe
     @Override
     public void onPreInitialization(PreInitializationEvent event) {
+        // initialize PlayerUtils
+        PlayerUtils.initialize(this.getGame());
+
         INFO("PreInitializationEvent");
         try {
             PermService permissionService = PermService.getInstance(true);
