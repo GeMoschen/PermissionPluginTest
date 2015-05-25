@@ -13,11 +13,6 @@ import org.spongepowered.api.text.format.TextColors;
 
 public class PlayerUtils {
 
-    public final static TextColor COLOR_PLUGIN_NAME = TextColors.AQUA;
-    public final static TextColor COLOR_INFO = TextColors.GRAY;
-    public final static TextColor COLOR_SUCCESS = TextColors.GREEN;
-    public final static TextColor COLOR_ERROR = TextColors.RED;
-    public final static TextColor COLOR_WARNING = TextColors.DARK_PURPLE;
     private static Server SPONGE_SERVER;
 
 
@@ -124,7 +119,7 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     public static void sendMessage(Player player, String pluginName, TextColor color, String message) {
-        sendMessage(player, Texts.builder("[ " + pluginName + " ] ").color(COLOR_PLUGIN_NAME).append(Texts.builder(message).color(color).build()).build());
+        sendMessage(player, Texts.builder("[ " + pluginName + " ] ").color(TextColors.AQUA).append(Texts.builder(message).color(color).build()).build());
     }
 
 
@@ -140,12 +135,12 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     public static void sendInfo(Player player, String pluginName, String message) {
-        sendMessage(player, pluginName, COLOR_INFO, message);
+        sendMessage(player, pluginName, TextColors.GRAY, message);
     }
 
 
     public static void sendInfo(Player player, String message) {
-        sendMessage(player, COLOR_INFO, message);
+        sendMessage(player, TextColors.GRAY, message);
     }
 
 
@@ -156,12 +151,12 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     public static void sendSuccess(Player player, String pluginName, String message) {
-        sendMessage(player, pluginName, COLOR_SUCCESS, message);
+        sendMessage(player, pluginName, TextColors.GREEN, message);
     }
 
 
     public static void sendSuccess(Player player, String message) {
-        sendMessage(player, COLOR_SUCCESS, message);
+        sendMessage(player, TextColors.GREEN, message);
     }
 
 
@@ -172,12 +167,12 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     public static void sendWarning(Player player, String pluginName, String message) {
-        sendMessage(player, pluginName, COLOR_WARNING, message);
+        sendMessage(player, pluginName, TextColors.DARK_PURPLE, message);
     }
 
 
     public static void sendWarning(Player player, String message) {
-        sendMessage(player, COLOR_WARNING, message);
+        sendMessage(player, TextColors.DARK_PURPLE, message);
     }
 
 
@@ -188,11 +183,11 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     public static void sendError(Player player, String pluginName, String message) {
-        sendMessage(player, pluginName, COLOR_ERROR, message);
+        sendMessage(player, pluginName, TextColors.RED, message);
     }
 
 
     public static void sendError(Player player, String message) {
-        sendMessage(player, COLOR_ERROR, message);
+        sendMessage(player, TextColors.RED, message);
     }
 }

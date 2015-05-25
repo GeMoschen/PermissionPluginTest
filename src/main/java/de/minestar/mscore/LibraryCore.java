@@ -7,6 +7,7 @@ import java.io.File;
 import org.spongepowered.api.event.Subscribe;
 import org.spongepowered.api.event.state.ConstructionEvent;
 import org.spongepowered.api.event.state.PreInitializationEvent;
+import org.spongepowered.api.event.state.ServerStartedEvent;
 import org.spongepowered.api.event.state.ServerStoppingEvent;
 import org.spongepowered.api.plugin.Plugin;
 import org.spongepowered.api.plugin.PluginContainer;
@@ -82,13 +83,20 @@ public class LibraryCore extends AbstractCore {
 
         INFO("PreInitializationEvent");
         try {
-            PermService permissionService = PermService.getInstance(true);
+            PermService permissionService = PermService.getInstance(false);
             this.getServiceManager().setProvider(this, PermissionService.class, permissionService);
             permissionService.init(this.getGame());
-            permissionService.loadWorlds(new File("Permissions/"));
+            permissionService.loadWorlds(new File(this.getDataFolder(), "Permissions/"));
         } catch (ProviderExistsException e) {
             e.printStackTrace();
         }
+    }
+
+
+    @Override
+    public void onServerStarted(ServerStartedEvent event) {
+        // initialize PlayerUtils
+        PlayerUtils.initialize(this.getGame());
     }
 
 }

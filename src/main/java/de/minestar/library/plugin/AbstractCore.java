@@ -95,7 +95,7 @@ public abstract class AbstractCore {
         // set vars
         this._pluginContainer = pluginContainer;
         this._game = game;
-        this._dataFolder = new File("config/plugins/" + this.getId() + "/");
+        this._dataFolder = new File("config/plugins/" + this.getName() + "/");
 
         // initialize
         return this.initialize();
@@ -115,7 +115,7 @@ public abstract class AbstractCore {
 
     private final boolean initialize() {
         // make dir
-        if (!this.getDataFolder().mkdirs()) {
+        if (!this.getDataFolder().exists() && !this.getDataFolder().mkdirs()) {
             LogUtils.ERROR(this, "Can't create directories! Plugin is not enabled!");
             return false;
         }
