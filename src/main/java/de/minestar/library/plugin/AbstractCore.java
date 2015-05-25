@@ -130,15 +130,15 @@ public abstract class AbstractCore {
             return false;
         }
 
-        // create threads
-        if (!this.createThreads()) {
-            LogUtils.ERROR(this, "Can't create threads! Plugin is not enabled!");
-            return false;
-        }
-
         // create listeners
         if (!this.createListeners()) {
             LogUtils.ERROR(this, "Can't create listeners! Plugin is not enabled!");
+            return false;
+        }
+
+        // create threads
+        if (!this.createThreads()) {
+            LogUtils.ERROR(this, "Can't create threads! Plugin is not enabled!");
             return false;
         }
 
