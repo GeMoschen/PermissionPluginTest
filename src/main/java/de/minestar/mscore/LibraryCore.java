@@ -1,25 +1,29 @@
 package de.minestar.mscore;
 
-import static de.Log.INFO;
+import static de.Log.*;
 
-import java.io.File;
+import java.io.*;
 
-import org.spongepowered.api.Game;
-import org.spongepowered.api.event.Subscribe;
-import org.spongepowered.api.event.state.ConstructionEvent;
-import org.spongepowered.api.event.state.PreInitializationEvent;
-import org.spongepowered.api.plugin.Plugin;
-import org.spongepowered.api.service.ProviderExistsException;
-import org.spongepowered.api.service.permission.PermissionService;
+import org.spongepowered.api.event.*;
+import org.spongepowered.api.event.state.*;
+import org.spongepowered.api.plugin.*;
+import org.spongepowered.api.service.*;
+import org.spongepowered.api.service.permission.*;
 
-import com.google.inject.Inject;
+import com.google.inject.*;
 
-import de.gemo.permconfig.sponge.PermService;
-import de.minestar.library.plugin.AbstractPluginCore;
+import de.gemo.permconfig.sponge.*;
+import de.minestar.library.plugin.*;
 
 
 @Plugin(id = "MinestarLibrary", name = "Minestar Library", version = "1.0")
-public class LibraryCore extends AbstractPluginCore {
+public class LibraryCore extends AbstractCore {
+
+    // ///////////////////////////////////////////////////////////////
+    //
+    // Static methods
+    //
+    // ///////////////////////////////////////////////////////////////
 
     private static LibraryCore INSTANCE;
 
@@ -33,20 +37,51 @@ public class LibraryCore extends AbstractPluginCore {
         return LibraryCore.INSTANCE;
     }
 
+    // ///////////////////////////////////////////////////////////////
+    //
+    // AbstractPluginCore
+    // The following lines should be contained in all plugins extending the AbstractCore
+    //
+    // ///////////////////////////////////////////////////////////////
 
     @Inject
-    public LibraryCore(final Game game) {
-        super(game);
-    }
+    PluginContainer pluginContainer;
 
 
     @Subscribe
     @Override
     public void onConstruction(ConstructionEvent event) {
-        INFO("ConstructionEvent");
-        LibraryCore.setInstance(this);
+        // startup
+        if (!this.startUp(this.pluginContainer, event.getGame(), new File("config/" + this.pluginContainer.getName() + "/"))) {
+            // TODO: is there a way to disable plugins on the fly?
+        }
     }
 
+
+    @Override
+    public void onServerStopping(ServerStoppingEvent event) {
+        this.shutdown();
+    }
+
+
+    // ///////////////////////////////////////////////////////////////
+    //
+    // Enable
+    //
+    // ///////////////////////////////////////////////////////////////
+
+    @Override
+    protected boolean commonEnable() {
+        LibraryCore.setInstance(this);
+        return true;
+    }
+
+
+    // ///////////////////////////////////////////////////////////////
+    //
+    // Events
+    //
+    // ///////////////////////////////////////////////////////////////
 
     @Subscribe
     @Override
@@ -61,4 +96,5 @@ public class LibraryCore extends AbstractPluginCore {
             e.printStackTrace();
         }
     }
+
 }
