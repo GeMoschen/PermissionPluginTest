@@ -113,9 +113,12 @@ public abstract class AbstractCore {
     }
 
 
-    protected final boolean initialize() {
+    private final boolean initialize() {
         // make dir
-        this.getDataFolder().mkdirs();
+        if (!this.getDataFolder().mkdirs()) {
+            LogUtils.ERROR(this, "Can't create directories! Plugin is not enabled!");
+            return false;
+        }
 
         // load configs
         if (!this.loadConfigurations()) {
