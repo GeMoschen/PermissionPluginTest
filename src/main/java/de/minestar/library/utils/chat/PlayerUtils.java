@@ -2,6 +2,8 @@ package de.minestar.library.utils.chat;
 
 import java.util.Collection;
 
+import javax.annotation.Nullable;
+
 import org.spongepowered.api.Server;
 import org.spongepowered.api.entity.player.Player;
 import org.spongepowered.api.text.Text;
@@ -9,17 +11,17 @@ import org.spongepowered.api.text.Texts;
 import org.spongepowered.api.text.format.TextColor;
 import org.spongepowered.api.text.format.TextColors;
 
-import de.minestar.mscore.MSCore;
+import de.minestar.mscore.LibraryCore;
 
 
 public class PlayerUtils {
 
-    public static TextColor COLOR_PLUGIN_NAME = TextColors.AQUA;
-    public static TextColor COLOR_INFO = TextColors.GRAY;
-    public static TextColor COLOR_SUCCESS = TextColors.GREEN;
-    public static TextColor COLOR_ERROR = TextColors.RED;
-    public static TextColor COLOR_WARNING = TextColors.DARK_PURPLE;
-    private static Server SPONGE_SERVER;
+    public final static TextColor COLOR_PLUGIN_NAME = TextColors.AQUA;
+    public final static TextColor COLOR_INFO = TextColors.GRAY;
+    public final static TextColor COLOR_SUCCESS = TextColors.GREEN;
+    public final static TextColor COLOR_ERROR = TextColors.RED;
+    public final static TextColor COLOR_WARNING = TextColors.DARK_PURPLE;
+    private final static Server SPONGE_SERVER;
 
     // /////////////////////////////////////////////////////////////////////////////
     //
@@ -29,7 +31,7 @@ public class PlayerUtils {
     // /////////////////////////////////////////////////////////////////////////////
 
     static {
-        SPONGE_SERVER = MSCore.getServer();
+        SPONGE_SERVER = LibraryCore.getInstance().getServer();
     }
 
 
