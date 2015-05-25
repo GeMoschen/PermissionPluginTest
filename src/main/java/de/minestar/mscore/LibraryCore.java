@@ -52,12 +52,13 @@ public class LibraryCore extends AbstractCore {
     @Override
     public void onConstruction(ConstructionEvent event) {
         // startup
-        if (!this.startUp(this.pluginContainer, event.getGame(), new File("config/" + this.pluginContainer.getName() + "/"))) {
+        if (!this.startUp(this.pluginContainer, event.getGame())) {
             // TODO: is there a way to disable plugins on the fly?
         }
     }
 
 
+    @Subscribe
     @Override
     public void onServerStopping(ServerStoppingEvent event) {
         this.shutdown();

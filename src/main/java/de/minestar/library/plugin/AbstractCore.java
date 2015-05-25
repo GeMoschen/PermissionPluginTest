@@ -76,16 +76,15 @@ public abstract class AbstractCore {
     }
 
 
-    public final boolean startUp(PluginContainer pluginContainer, Game game, File dataFolder) {
+    public final boolean startUp(PluginContainer pluginContainer, Game game) {
         // check preconditions
         Preconditions.checkNotNull(pluginContainer);
         Preconditions.checkNotNull(game);
-        Preconditions.checkNotNull(dataFolder);
 
         // set vars
         this._pluginContainer = pluginContainer;
         this._game = game;
-        this._dataFolder = dataFolder;
+        this._dataFolder = new File("config/plugins/" + this.getId() + "/");
 
         // initialize
         return this.initialize();
